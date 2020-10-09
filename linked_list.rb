@@ -1,45 +1,118 @@
-# LinkedList
-  
-  # append(value)
-    # adds new node (value) to end of list
 
-  # prepend(value)
-    # adds new node (value) to beginning of list
+class LinkedList
+  attr_accessor :head, :tail, :size
 
-  # head
-    # first node of list
+  def initialize
+    @head = nil
+    @tail = nil
+    @size = 0
+  end
 
-  # at(index)
-    # returns node at index
+  def append(value)
+    value = Node.new(value)
+    if @head.nil?
+      @head = value
+    else
+      @tail.next_node = value
+    end
+    @tail = value
+    @size += 1
+  end
 
-  # tail
-    # last node of list
+  def prepend(value)
+    value = Node.new(value)
+    if @head.nil?
+      @tail = value
+    else
+      value.next_node = @head
+    end
+    @head = value
+    @size += 1
+  end
 
-  # size
-    # total number of nodes
+  def to_s
+    string = ''
+    node = @head
+    @size.times do
+      string += "( #{node.value} ) -> "
+      node = node.next_node
+    end
+    string += ' nil '
+  end
 
-  # pop
-    # removes last element from list
+  def pop
+    node = @head
+    (@size - 1).times do
+      if node.next_node == @tail
+        @tail = node
+        @tail.next_node = nil
+        @size -= 1
+      else
+        node = node.next_node
+      end
+    end
+  end
 
-  # contains?(value)
-    # true/false if value is in list
+  def at(index)
+    if index.is_a?(String)
+      puts 'Enter a valid number'
+    elsif index >= size || index.negative?
+      puts 'Not valid index'
+    else
+      node = @head
+      list_index = 0
+      loop do
+        break if list_index == index
 
-  # find(value)
+        list_index += 1
+        node = node.next_node
+      end
+      node
+    end
+  end
+
+  def contains?(value)
+    node = @head
+    @size.times do
+      if node.value == value.to_s
+        return true
+      else
+        node = node.next_node
+      end
+    end
+    false
+  end
+
+# find(value)
     # returns index of node containing value or nil if not found
 
-  # to_s
-    # turns objects into strings to be printed/previewed
-    # format: ( value ) -> ( value ) -> ( value ) -> nil
+end
+
+class Node
+  attr_accessor :value, :next_node
+
+  def initialize(value = nil)
+    @value = value
+    @next_node = nil
+  end
+end
+
+list = LinkedList.new
+
+list.append('7')
+list.append('8')
+
+list.prepend('4')
+
+puts list.to_s
+
+#list.pop
+#puts list.to_s
+
+puts list.contains?(4)
+puts list.contains?(8)
+puts list.contains?(18)
 
 
 
-    
 
-# Node
-
-  # value
-    # default to 'nil'
-    # points to #next_node
-
-  # next_node
-    # default to 'nil'
