@@ -23,11 +23,7 @@ class LinkedList
 
   def prepend(value)
     node = Node.new(value)
-    if @head.nil?
-      @tail = node
-    else
-      node.next_node = @head
-    end
+    node.next_node = @head
     @head = node
     @size += 1
   end
@@ -43,14 +39,22 @@ class LinkedList
   end
 
   def pop
-    node = @head
-    (@size - 1).times do
-      if node.next_node == @tail
-        @tail = node
-        @tail.next_node = nil
-        @size -= 1
-      else
-        node = node.next_node
+    return nil if @size.zero?
+
+    if @size == 1
+      @head = nil
+      @tail = nil
+      @size -= 1
+    else
+      node = @head
+      @size.times do
+        if node.next_node == @tail
+          @tail = node
+          @tail.next_node = nil
+          @size -= 1
+        else
+          node = node.next_node
+        end
       end
     end
   end
@@ -146,24 +150,20 @@ class LinkedList
   def remove_at(index)
     if index.negative? || index >= @size
       puts 'Not valid index'
-    elsif index.zero?
-      remove_head(index)
+      return nil
+    end
+    if index.zero? && @size > 1
+      @head = head.next_node
+      @size -= 1
+    elsif index.zero? && @size == 1
+      @head = nil
+      @tail = nil
+      @size -= 1
     elsif index == @size - 1
-      remove_tail(index)
+      pop
     else
       remove_node(index)
     end
-    check_nil
-  end
-
-  def remove_head(index)
-    @head = find_node(index + 1)
-    @size -= 1
-  end
-
-  def remove_tail(index)
-    @tail = find_node(index - 1)
-    @size -= 1
   end
 
   def remove_node(index)
@@ -171,12 +171,5 @@ class LinkedList
     node_after = find_node(index + 1)
     node_before.next_node = node_after
     @size -= 1
-  end
-
-  def check_nil
-    return unless @size.zero?
-
-    @head = nil
-    @tail = nil
   end
 end
