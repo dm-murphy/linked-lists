@@ -8,7 +8,7 @@ list.append('7')
 list.append('8')
 puts list.to_s
 puts
-puts "Then we can add 4 to the beginning."
+puts 'Then we can add 4 to the beginning.'
 list.prepend('4')
 puts list.to_s
 puts
@@ -23,7 +23,7 @@ puts "We can check the node at index of 1 here: #{list.at(1)}"
 puts "And it's value: #{list.at(1).value}"
 puts
 
-puts "We can pop the last node from the list."
+puts 'We can pop the last node from the list.'
 list.pop
 puts list.to_s
 puts
@@ -33,7 +33,7 @@ list.append('8')
 puts list.to_s
 puts
 
-puts "We can check that it contains a value, like 4"
+puts 'We can check that it contains a value, like 4.'
 puts list.contains?(4)
 puts "We can even use strings too, '4' "
 puts list.contains?('4')
@@ -41,10 +41,10 @@ puts "And make sure weird things aren't in there like 'pizza' "
 puts list.contains?('pizza')
 puts
 
-puts "We can find the index position for a value, like 7"
+puts 'We can find the index position for a value, like 7.'
 puts list.find(7)
 puts
-puts "We can insert new values at an index position, like 17 at index of 2"
+puts 'We can insert new values at an index position, like 17 at index of 2.'
 list.insert_at('17', 2)
 puts list.to_s
 puts
@@ -60,7 +60,7 @@ puts "Tail: #{list.tail.value}"
 puts
 
 
-puts "We can even remove the head or the tail, or everything!"
+puts 'We can even remove the head or the tail, or everything!'
 list.remove_at(0)
 puts list.to_s
 
@@ -80,6 +80,6 @@ puts
 list.remove_at(0)
 puts list.to_s
 puts
-puts "And why only use numbers?"
+puts 'And why only use numbers?'
 list.append('pizza!')
 puts list.to_s
