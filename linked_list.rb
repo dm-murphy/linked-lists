@@ -1,12 +1,6 @@
-class Node
-  attr_accessor :value, :next_node
+# frozen_string_literal: true
 
-  def initialize(value = nil)
-    @value = value
-    @next_node = nil
-  end
-end
-
+# Linear collection of nodes that operates similar to an array
 class LinkedList
   attr_accessor :head, :tail, :size
 
@@ -17,24 +11,24 @@ class LinkedList
   end
 
   def append(value)
-    value = Node.new(value)
+    node = Node.new(value)
     if @head.nil?
-      @head = value
+      @head = node
     else
-      @tail.next_node = value
+      @tail.next_node = node
     end
-    @tail = value
+    @tail = node
     @size += 1
   end
 
   def prepend(value)
-    value = Node.new(value)
+    node = Node.new(value)
     if @head.nil?
-      @tail = value
+      @tail = node
     else
-      value.next_node = @head
+      node.next_node = @head
     end
-    @head = value
+    @head = node
     @size += 1
   end
 
@@ -94,7 +88,7 @@ class LinkedList
   def find(value)
     contains?(value) ? find_index(value) : nil
   end
-    
+
   def find_index(value)
     node = @head
     counter = 0
@@ -112,77 +106,77 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    node = @head
-    #puts node.value # for debugging
-    if index.zero?
-      @head = Node.new(value)
-      #puts @head.value # for debugging
-      @head.next_node = node
-      @size += 1
-    elsif index.negative? || index > @size
+    if index.negative? || index > @size
       puts 'Not valid index'
+    elsif index.zero?
+      insert_at_head(value)
     else
-      counter = 1
-      (@size).times do # or size if given index is more than @size
-        if index == counter
-          temp_node = node.next_node
-          node.next_node = Node.new(value)
-          node.next_node.next_node = temp_node
-          @size += 1
-          break
-        else
-          node = node.next_node
-          counter += 1
-        end
+      insert_at_index(value, index)
+    end
+  end
+
+  def insert_at_head(value)
+    node = @head
+    @head = Node.new(value)
+    @head.next_node = node
+    @size += 1
+  end
+
+  def insert_at_index(value, index)
+    node = @head
+    counter = 1
+    @size.times do
+      if index == counter
+        insert_node(node, value)
+        break
+      else
+        node = node.next_node
+        counter += 1
       end
     end
-  end  
+  end
 
+  def insert_node(node, value)
+    temp_node = node.next_node
+    node.next_node = Node.new(value)
+    node.next_node.next_node = temp_node
+    @size += 1
+  end
+
+  def remove_at(index)
+    if index.negative? || index >= @size
+      puts 'Not valid index'
+    elsif index.zero?
+      remove_head(index)
+    elsif index == @size - 1
+      remove_tail(index)
+    else
+      remove_node(index)
+    end
+    check_nil
+  end
+
+  def remove_head(index)
+    @head = find_node(index + 1)
+    @size -= 1
+  end
+
+  def remove_tail(index)
+    @tail = find_node(index - 1)
+    @size -= 1
+  end
+
+  def remove_node(index)
+    node_before = find_node(index - 1)
+    node_after = find_node(index + 1)
+    node_before.next_node = node_after
+    @size -= 1
+  end
+
+  def check_nil
+    if @size.zero?
+      @head = nil
+      @tail = nil
+    end
+  end
 end
-
-list = LinkedList.new
-
-list.append('7')
-list.append('8')
-
-list.prepend('4')
-
-# puts list.to_s
-
-# puts
-# puts list.size
-# puts list.head
-# puts list.tail
-# puts
-
-# puts list.at(1)
-# puts
-
-# list.pop
-# puts list.to_s
-# puts
-
-# list.append('8')
-
-# puts list.contains?(4)
-# puts list.contains?(8)
-# puts list.contains?(18)
-# puts
-
-# puts list.find(4)
-# puts list.find(19)
-# puts list.find(8)
-
-puts list.to_s
-list.insert_at('17', 2)
-puts list.to_s
-
-puts
-puts
-puts
- puts list.at(1)
- puts
-
-
-
-
