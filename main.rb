@@ -54,29 +54,11 @@ list.remove_at(2)
 puts list.to_s
 puts
 
-puts
-puts "Head: #{list.head.value}"
-puts "Tail: #{list.tail.value}"
-puts
-
-
 puts 'We can even remove the head or the tail, or everything!'
 list.remove_at(0)
 puts list.to_s
-
-puts
-puts "Head: #{list.head.value}"
-puts "Tail: #{list.tail.value}"
-puts
-
 list.remove_at(1)
 puts list.to_s
-
-puts
-puts "Head: #{list.head.value}"
-puts "Tail: #{list.tail.value}"
-puts
-
 list.remove_at(0)
 puts list.to_s
 puts
