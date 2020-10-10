@@ -174,9 +174,9 @@ class LinkedList
   end
 
   def check_nil
-    if @size.zero?
-      @head = nil
-      @tail = nil
-    end
+    return unless @size.zero?
+
+    @head = nil
+    @tail = nil
   end
 end
